@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jen's Local Mart – Retail Store Management System</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Header & Navigation -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-logo">🏪</div>
+        <div class="brand-info">
+          <h1 class="brand-title">Jen's Local Mart</h1>
+          <p class="brand-subtitle">Retail Store Management System</p>
+        </div>
+      </div>
+      <nav class="main-nav">
+        <button class="nav-btn active" data-section="dashboard">
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">Dashboard</span>
+        </button>
+        <button class="nav-btn" data-section="inventory">
+          <span class="nav-icon">📦</span>
+          <span class="nav-text">Inventory</span>
+        </button>
+        <button class="nav-btn" data-section="add-product">
+          <span class="nav-icon">➕</span>
+          <span class="nav-text">Add Product</span>
+        </button>
+        <button class="nav-btn" data-section="sales">
+          <span class="nav-icon">🛒</span>
+          <span class="nav-text">Sales</span>
+          <span id="nav-cart-badge" class="nav-badge" style="display: none;">0</span>
+        </button>
+        <button class="nav-btn" data-section="patterns">
+          <span class="nav-icon">🧩</span>
+          <span class="nav-text">Design Patterns</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="main-content">
+
+    <!-- ==================== 1. DASHBOARD SECTION ==================== -->
+    <section id="section-dashboard" class="content-section active">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Dashboard Overview</h2>
+          <p class="section-subtitle">Real-time statistics for Jen's Local Mart</p>
+        </div>
+        <div class="date-badge" id="current-date-badge">Philippine Peso (₱) Store Operations</div>
+      </div>
+
+      <!-- Stat Cards Grid -->
+      <div class="stats-grid">
+        <div class="stat-card stat-primary">
+          <div class="stat-header">
+            <span class="stat-label">Total Products</span>
+            <span class="stat-icon">🏷️</span>
+          </div>
+          <div class="stat-value" id="dash-total-products">0</div>
+          <div class="stat-desc">Active catalog items</div>
+        </div>
+
+        <div class="stat-card stat-success">
+          <div class="stat-header">
+            <span class="stat-label">Total Stock</span>
+            <span class="stat-icon">📦</span>
+          </div>
+          <div class="stat-value" id="dash-total-stock">0</div>
+          <div class="stat-desc">Units currently in inventory</div>
+        </div>
+
+        <div class="stat-card stat-warning">
+          <div class="stat-header">
+            <span class="stat-label">Low Stock Products</span>
+            <span class="stat-icon">⚠️</span>
+          </div>
+          <div class="stat-value" id="dash-low-stock">0</div>
+          <div class="stat-desc">Items with 10 or fewer units</div>
+        </div>
+
+        <div class="stat-card stat-accent">
+          <div class="stat-header">
+            <span class="stat-label">Today's Sales</span>
+            <span class="stat-icon">💰</span>
+          </div>
+          <div class="stat-value" id="dash-today-sales">₱0.00</div>
+          <div class="stat-desc">Gross revenue today</div>
+        </div>
+      </div>
+
+      <!-- Quick Actions & Highlights -->
+      <div class="dashboard-columns">
+        <!-- Quick Actions Panel -->
+        <div class="card quick-actions-card">
+          <h3 class="card-title">⚡ Quick Operations</h3>
+          <p class="card-subtitle">Frequently used store management actions</p>
+          <div class="quick-btn-group">
+            <button class="btn btn-primary" onclick="navigateToSection('sales')">
+              <span>🛒</span> Go to Sales / Checkout
+            </button>
+            <button class="btn btn-secondary" onclick="navigateToSection('add-product')">
+              <span>➕</span> Add New Product
+            </button>
+            <button class="btn btn-outline" onclick="navigateToSection('inventory')">
+              <span>📦</span> View Full Inventory
+            </button>
+          </div>
+
+          <div class="patterns-callout">
+            <div class="callout-header">
+              <span class="callout-icon">🧩</span>
+              <strong>Architecture Highlights</strong>
+            </div>
+            <p>This application implements <strong>Factory</strong>, <strong>Singleton</strong>, and <strong>Strategy</strong> design patterns in vanilla JavaScript.</p>
+            <button class="btn-link" onclick="navigateToSection('patterns')">Explore Design Patterns &rarr;</button>
+          </div>
+        </div>
+
+        <!-- Recent Transactions Panel -->
+        <div class="card transactions-card">
+          <div class="card-header-flex">
+            <div>
+              <h3 class="card-title">🧾 Recent Completed Sales</h3>
+              <p class="card-subtitle">Sales recorded today</p>
+            </div>
+            <span class="badge badge-info" id="transactions-count">0 Sales</span>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Receipt #</th>
+                  <th>Items</th>
+                  <th>Discount</th>
+                  <th>Total (₱)</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody id="dash-transactions-body">
+                <tr>
+                  <td colspan="5" class="empty-cell">No sales recorded yet. Process a sale in the Sales tab!</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 2. INVENTORY SECTION ==================== -->
+    <section id="section-inventory" class="content-section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Product Inventory</h2>
+          <p class="section-subtitle">Manage store products, stock levels, and instant sales</p>
+        </div>
+        <button class="btn btn-primary" onclick="navigateToSection('add-product')">
+          <span>➕</span> Add New Product
+        </button>
+      </div>
+
+      <!-- Filters & Search Toolbar -->
+      <div class="card toolbar-card">
+        <div class="toolbar-wrapper">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="inventory-search" placeholder="Search by Product ID or Name..." autocomplete="off">
+          </div>
+          <div class="filter-box">
+            <label for="inventory-category-filter">Category:</label>
+            <select id="inventory-category-filter">
+              <option value="all">All Categories</option>
+              <option value="food">Food & Snacks</option>
+              <option value="beverage">Beverages</option>
+              <option value="personalCare">Personal Care</option>
+              <option value="household">Household</option>
+              <option value="schoolSupply">School / Office Supplies</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inventory Table Card -->
+      <div class="card">
+        <div class="table-responsive">
+          <table class="data-table" id="inventory-table">
+            <thead>
+              <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inventory-table-body">
+              <!-- Rendered dynamically by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footer" id="inventory-summary-footer">
+          Showing 6 products
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 3. ADD PRODUCT SECTION ==================== -->
+    <section id="section-add-product" class="content-section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Add New Product</h2>
+          <p class="section-subtitle">Create and catalog a new product via the ProductFactory</p>
+        </div>
+      </div>
+
+      <div class="form-layout">
+        <!-- Add Product Form Card -->
+        <div class="card form-card">
+          <div class="pattern-tag">
+            <span>🏭</span> Uses <strong>Factory Pattern</strong> (`ProductFactory.createProduct`)
+          </div>
+          
+          <form id="add-product-form" novalidate>
+            <div class="form-group">
+              <label for="prod-id">Product ID <span class="required">*</span></label>
+              <input type="text" id="prod-id" placeholder="e.g., P007" required maxlength="10">
+              <small class="form-hint">Unique identifier for the item (e.g. P007, P008).</small>
+            </div>
+
+            <div class="form-group">
+              <label for="prod-name">Product Name <span class="required">*</span></label>
+              <input type="text" id="prod-name" placeholder="e.g., SkyFlakes Crackers" required maxlength="50">
+            </div>
+
+            <div class="form-group">
+              <label for="prod-category">Category <span class="required">*</span></label>
+              <select id="prod-category" required>
+                <option value="" disabled selected>-- Select a Category --</option>
+                <option value="food">Food and Snacks</option>
+                <option value="beverage">Beverages</option>
+                <option value="personalCare">Personal Care</option>
+                <option value="household">Household Products</option>
+                <option value="schoolSupply">School / Office Supplies</option>
+              </select>
+              <small class="form-hint">The Factory determines the specialized object class based on this category.</small>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-half">
+                <label for="prod-price">Price (₱) <span class="required">*</span></label>
+                <div class="input-prefix-wrapper">
+                  <span class="input-prefix">₱</span>
+                  <input type="number" id="prod-price" placeholder="0.00" min="0.01" step="0.50" required>
+                </div>
+              </div>
+
+              <div class="form-group col-half">
+                <label for="prod-stock">Initial Stock <span class="required">*</span></label>
+                <input type="number" id="prod-stock" placeholder="0" min="0" step="1" required>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary btn-large">
+                <span>➕</span> Add Product
+              </button>
+              <button type="reset" class="btn btn-secondary">
+                <span>↺</span> Reset Form
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Educational Info Card -->
+        <div class="card info-sidebar-card">
+          <h3 class="card-title">ℹ️ Factory & Singleton in Action</h3>
+          <p>When you click <strong>Add Product</strong>, the following takes place:</p>
+          <ol class="info-steps">
+            <li>
+              <strong>Factory Invocation:</strong>
+              <code>ProductFactory.createProduct(category, id, name, price, stock)</code> creates a clean specialized product object.
+            </li>
+            <li>
+              <strong>Singleton Access:</strong>
+              The product is saved into <code>InventoryManager.getInstance()</code>, guaranteeing unified state.
+            </li>
+            <li>
+              <strong>Reactive Updates:</strong>
+              The Dashboard and Inventory tables automatically refresh their counts.
+            </li>
+          </ol>
+          <div class="category-legend">
+            <strong>Supported Categories:</strong>
+            <ul>
+              <li>🍲 <code>food</code> &rarr; Food & Snacks</li>
+              <li>🥤 <code>beverage</code> &rarr; Beverages</li>
+              <li>🧴 <code>personalCare</code> &rarr; Personal Care</li>
+              <li>🧹 <code>household</code> &rarr; Household</li>
+              <li>✏️ <code>schoolSupply</code> &rarr; School & Office Supplies</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 4. SALES / CHECKOUT SECTION ==================== -->
+    <section id="section-sales" class="content-section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Sales & Checkout</h2>
+          <p class="section-subtitle">Process customer purchases with interchangeable discount strategies</p>
+        </div>
+      </div>
+
+      <div class="sales-layout">
+        <!-- Left: Product Selection & Add to Cart -->
+        <div class="card sales-selection-card">
+          <h3 class="card-title">1. Select Product to Sell</h3>
+          <p class="card-subtitle">Choose an item from inventory and specify quantity</p>
+
+          <div class="form-group">
+            <label for="sale-product-select">Select Product:</label>
+            <select id="sale-product-select">
+              <option value="" disabled selected>-- Select an item from inventory --</option>
+              <!-- Populated by JS -->
+            </select>
+          </div>
+
+          <!-- Selected Product Details Preview -->
+          <div id="sale-product-preview" class="product-preview-card" style="display: none;">
+            <div class="preview-row">
+              <span class="preview-label">Product Name:</span>
+              <strong id="prev-prod-name">-</strong>
+            </div>
+            <div class="preview-row">
+              <span class="preview-label">Category:</span>
+              <span id="prev-prod-category" class="badge badge-category">-</span>
+            </div>
+            <div class="preview-row">
+              <span class="preview-label">Unit Price:</span>
+              <strong id="prev-prod-price" class="text-primary">₱0.00</strong>
+            </div>
+            <div class="preview-row">
+              <span class="preview-label">Available Stock:</span>
+              <span id="prev-prod-stock" class="badge badge-stock">-</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="sale-quantity">Quantity to Sell:</label>
+            <div class="quantity-control-wrapper">
+              <button type="button" class="qty-btn" id="btn-qty-minus">-</button>
+              <input type="number" id="sale-quantity" value="1" min="1" step="1">
+              <button type="button" class="qty-btn" id="btn-qty-plus">+</button>
+            </div>
+          </div>
+
+          <div class="item-subtotal-preview">
+            <span>Item Subtotal:</span>
+            <strong id="sale-item-subtotal">₱0.00</strong>
+          </div>
+
+          <!-- Stock Error Alert Box -->
+          <div id="stock-error-box" class="alert-box alert-error" style="display: none;">
+            <span class="alert-icon">⚠️</span>
+            <span id="stock-error-message">Insufficient stock!</span>
+          </div>
+
+          <button type="button" id="btn-add-to-cart" class="btn btn-primary btn-block">
+            <span>🛒</span> Add to Cart
+          </button>
+        </div>
+
+        <!-- Right: Cart & Checkout Summary -->
+        <div class="card checkout-card">
+          <div class="card-header-flex">
+            <div>
+              <h3 class="card-title">2. Customer Cart</h3>
+              <p class="card-subtitle">Items ready for checkout</p>
+            </div>
+            <button type="button" id="btn-clear-cart" class="btn btn-sm btn-outline text-danger" style="display: none;">
+              <span>🗑️</span> Clear Cart
+            </button>
+          </div>
+
+          <!-- Cart Items Table -->
+          <div class="table-responsive cart-table-container">
+            <table class="data-table" id="cart-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Qty</th>
+                  <th>Total</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="cart-table-body">
+                <tr>
+                  <td colspan="5" class="empty-cell">The cart is currently empty. Add products from the left panel.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Discount Strategy Selector (Strategy Pattern) -->
+          <div class="discount-strategy-wrapper">
+            <div class="strategy-header">
+              <label class="strategy-title">
+                <span>🎯</span> <strong>Select Discount Strategy:</strong>
+              </label>
+              <span class="pattern-pill">Strategy Pattern</span>
+            </div>
+            
+            <div class="strategy-options">
+              <label class="strategy-option">
+                <input type="radio" name="discount-strategy" value="regular" checked>
+                <div class="option-content">
+                  <div class="option-title">Regular Customer</div>
+                  <div class="option-desc">No discount (0%)</div>
+                </div>
+              </label>
+
+              <label class="strategy-option">
+                <input type="radio" name="discount-strategy" value="student">
+                <div class="option-content">
+                  <div class="option-title">Student Discount 🎓</div>
+                  <div class="option-desc">5% discount on total</div>
+                </div>
+              </label>
+
+              <label class="strategy-option">
+                <input type="radio" name="discount-strategy" value="bulk">
+                <div class="option-content">
+                  <div class="option-title">Bulk Purchase 📦</div>
+                  <div class="option-desc">10% discount on total</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Calculation Summary -->
+          <div class="checkout-summary">
+            <div class="summary-line">
+              <span>Subtotal:</span>
+              <span id="checkout-subtotal" class="summary-val">₱0.00</span>
+            </div>
+            <div class="summary-line text-success">
+              <span id="discount-label">Discount (0%):</span>
+              <span id="checkout-discount" class="summary-val">-₱0.00</span>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-line summary-total">
+              <span>Final Total:</span>
+              <span id="checkout-total" class="summary-val">₱0.00</span>
+            </div>
+          </div>
+
+          <!-- Complete Sale Button -->
+          <button type="button" id="btn-complete-sale" class="btn btn-accent btn-large btn-block" disabled>
+            <span>✅</span> Complete Sale
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 5. DESIGN PATTERNS USED SECTION ==================== -->
+    <section id="section-patterns" class="content-section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Design Patterns Used</h2>
+          <p class="section-subtitle">Real-world implementation of GoF Design Patterns in JavaScript</p>
+        </div>
+      </div>
+
+      <!-- Required Overview Cards -->
+      <div class="patterns-grid">
+        <!-- 1. Factory Pattern -->
+        <div class="card pattern-card">
+          <div class="pattern-card-header">
+            <div class="pattern-icon-badge factory-color">🏭</div>
+            <div>
+              <h3 class="pattern-name">Factory Pattern</h3>
+              <p class="pattern-tagline">Creates different product objects.</p>
+            </div>
+          </div>
+          <div class="pattern-body">
+            <p class="pattern-explanation">
+              <strong>How it works:</strong> Instead of invoking specialized product constructors directly in UI forms, the client delegates creation to <code>ProductFactory.createProduct(category, id, name, price, stock)</code>.
+            </p>
+            <div class="code-snippet-box">
+<pre><code>// Example from app.js:
+ProductFactory.createProduct(
+  "food",
+  "P001",
+  "Pancit Canton",
+  15,
+  50
+);</code></pre>
+            </div>
+            <div class="pattern-benefits">
+              <strong>In this application:</strong>
+              <ul>
+                <li>Instantiates proper subclasses: <code>FoodProduct</code>, <code>BeverageProduct</code>, <code>PersonalCareProduct</code>, <code>HouseholdProduct</code>, <code>SchoolSupplyProduct</code>.</li>
+                <li>Encapsulates category attributes (icons, descriptions) in one location.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Singleton Pattern -->
+        <div class="card pattern-card">
+          <div class="pattern-card-header">
+            <div class="pattern-icon-badge singleton-color">🏛️</div>
+            <div>
+              <h3 class="pattern-name">Singleton Pattern</h3>
+              <p class="pattern-tagline">Maintains one central inventory manager.</p>
+            </div>
+          </div>
+          <div class="pattern-body">
+            <p class="pattern-explanation">
+              <strong>How it works:</strong> Ensures only ONE instance of <code>InventoryManager</code> exists across the entire app. Any call to <code>InventoryManager.getInstance()</code> returns the identical memory reference.
+            </p>
+            <div class="code-snippet-box">
+<pre><code>// Example from app.js:
+const inventory = InventoryManager.getInstance();
+const inventory2 = InventoryManager.getInstance();
+console.log(inventory === inventory2); // true</code></pre>
+            </div>
+            <div class="pattern-benefits">
+              <strong>Why it's essential for Inventory:</strong>
+              <ul>
+                <li>A retail store has only one physical stockroom.</li>
+                <li>Prevents desynchronized stock counts between Dashboard, Tables, and Checkout.</li>
+                <li>Provides a single source of truth for all additions, sales, and restocking.</li>
+              </ul>
+            </div>
+            <!-- Live verification widget -->
+            <div class="live-pattern-test">
+              <button type="button" class="btn btn-sm btn-outline" id="btn-test-singleton">
+                🧪 Run Live Singleton Test
+              </button>
+              <span id="singleton-test-result" class="test-result"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Strategy Pattern -->
+        <div class="card pattern-card">
+          <div class="pattern-card-header">
+            <div class="pattern-icon-badge strategy-color">🎯</div>
+            <div>
+              <h3 class="pattern-name">Strategy Pattern</h3>
+              <p class="pattern-tagline">Allows different discount strategies to be selected.</p>
+            </div>
+          </div>
+          <div class="pattern-body">
+            <p class="pattern-explanation">
+              <strong>How it works:</strong> Encapsulates different discount algorithms into separate strategy classes (<code>RegularDiscountStrategy</code>, <code>StudentDiscountStrategy</code>, <code>BulkDiscountStrategy</code>) sharing a common interface <code>calculateDiscount(amount)</code>.
+            </p>
+            <div class="code-snippet-box">
+<pre><code>// Example from app.js:
+checkout.setDiscountStrategy(new StudentDiscountStrategy());
+const discount = checkout.calculateDiscount(subtotal);</code></pre>
+            </div>
+            <div class="pattern-benefits">
+              <strong>In this application:</strong>
+              <ul>
+                <li><strong>Regular Customer:</strong> 0% discount.</li>
+                <li><strong>Student Discount:</strong> 5% discount (<code>amount * 0.05</code>).</li>
+                <li><strong>Bulk Purchase:</strong> 10% discount (<code>amount * 0.10</code>).</li>
+                <li>The Checkout logic remains unchanged when switching algorithms.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== RESTOCK MODAL ==================== -->
+  <div id="restock-modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">📦 Restock Product</h3>
+        <button type="button" class="modal-close-btn" id="btn-close-restock">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="restock-product-info">
+          <div class="restock-info-item">
+            <span class="info-label">Product ID:</span>
+            <span class="info-value" id="restock-prod-id">P001</span>
+          </div>
+          <div class="restock-info-item">
+            <span class="info-label">Product Name:</span>
+            <span class="info-value" id="restock-prod-name">Pancit Canton</span>
+          </div>
+        </div>
+
+        <div class="restock-calculation-box">
+          <div class="calc-row">
+            <span>Current Stock:</span>
+            <strong id="restock-current-stock" class="text-muted">10</strong>
+          </div>
+          <div class="calc-row">
+            <label for="restock-quantity-input">Restock Quantity to Add:</label>
+            <input type="number" id="restock-quantity-input" min="1" step="1" value="10">
+          </div>
+          <div class="calc-divider"></div>
+          <div class="calc-row new-stock-row">
+            <span>New Stock:</span>
+            <strong id="restock-new-stock" class="text-success">20</strong>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="btn-cancel-restock">Cancel</button>
+        <button type="button" class="btn btn-primary" id="btn-confirm-restock">Confirm Restock</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== RECEIPT MODAL ==================== -->
+  <div id="receipt-modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-dialog receipt-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">🧾 Transaction Receipt</h3>
+        <button type="button" class="modal-close-btn" id="btn-close-receipt">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="receipt-paper" id="receipt-content">
+          <div class="receipt-header">
+            <h4>JEN'S LOCAL MART</h4>
+            <p>Local Retail Store Management</p>
+            <p class="receipt-meta" id="receipt-datetime">Date: 2026-10-01 16:30</p>
+            <p class="receipt-meta" id="receipt-number">Receipt #: REC-1001</p>
+          </div>
+          <div class="receipt-divider">--------------------------------</div>
+          <table class="receipt-table">
+            <thead>
+              <tr>
+                <th class="text-left">Item</th>
+                <th class="text-center">Qty</th>
+                <th class="text-right">Price</th>
+                <th class="text-right">Total</th>
+              </tr>
+            </thead>
+            <tbody id="receipt-items-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+          <div class="receipt-divider">--------------------------------</div>
+          <div class="receipt-summary">
+            <div class="receipt-line">
+              <span>Subtotal:</span>
+              <span id="receipt-subtotal">₱0.00</span>
+            </div>
+            <div class="receipt-line">
+              <span id="receipt-discount-name">Discount:</span>
+              <span id="receipt-discount-amount">-₱0.00</span>
+            </div>
+            <div class="receipt-line receipt-grand-total">
+              <span>TOTAL (PHP):</span>
+              <strong id="receipt-final-total">₱0.00</strong>
+            </div>
+          </div>
+          <div class="receipt-divider">--------------------------------</div>
+          <div class="receipt-footer">
+            <p>Thank you for shopping at Jen's Local Mart!</p>
+            <p>Maraming Salamat Po! Mabuhay!</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="btn-done-receipt">Close</button>
+        <button type="button" class="btn btn-primary" onclick="window.print()">🖨️ Print Receipt</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p><strong>Jen's Local Mart – Retail Store Management System</strong> &bull; Philippine Peso (₱) Currency</p>
+      <p class="footer-subtext">College JavaScript Activity &bull; Demonstrating Factory, Singleton, and Strategy Design Patterns</p>
+    </div>
+  </footer>
+
+  <!-- Main JavaScript Application -->
+  <script src="app.js"></script>
+</body>
+</html>

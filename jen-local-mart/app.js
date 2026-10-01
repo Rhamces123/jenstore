@@ -54,52 +54,51 @@ const initialSampleProducts = [
         ProductFactory.createProduct(category, id, name, price, stock)
 
     The Factory inspects the "category" argument and instantiates the appropriate
-    subclass, attaching category-specific attributes (such as human-friendly labels
-    and icons). If new product categories are introduced in the future, only the
-    Factory needs to be updated, keeping the rest of the application unchanged.
+    subclass, attaching category-specific attributes (such as human-friendly labels).
+    If new product categories are introduced in the future, only the Factory needs
+    to be updated, keeping the rest of the application unchanged.
 */
 
 // Base Product Class
 class Product {
-  constructor(id, name, price, stock, category, categoryLabel, icon) {
+  constructor(id, name, price, stock, category, categoryLabel) {
     this.id = String(id).trim().toUpperCase();
     this.name = String(name).trim();
     this.price = Number(price);
     this.stock = Number(stock);
     this.category = category;
     this.categoryLabel = categoryLabel;
-    this.icon = icon || '🏷️';
   }
 }
 
 // Specific Subclasses for Each Product Category
 class FoodProduct extends Product {
   constructor(id, name, price, stock) {
-    super(id, name, price, stock, 'food', 'Food & Snacks', '🍲');
+    super(id, name, price, stock, 'food', 'Food & Snacks');
   }
 }
 
 class BeverageProduct extends Product {
   constructor(id, name, price, stock) {
-    super(id, name, price, stock, 'beverage', 'Beverages', '🥤');
+    super(id, name, price, stock, 'beverage', 'Beverages');
   }
 }
 
 class PersonalCareProduct extends Product {
   constructor(id, name, price, stock) {
-    super(id, name, price, stock, 'personalCare', 'Personal Care', '🧴');
+    super(id, name, price, stock, 'personalCare', 'Personal Care');
   }
 }
 
 class HouseholdProduct extends Product {
   constructor(id, name, price, stock) {
-    super(id, name, price, stock, 'household', 'Household', '🧹');
+    super(id, name, price, stock, 'household', 'Household');
   }
 }
 
 class SchoolSupplyProduct extends Product {
   constructor(id, name, price, stock) {
-    super(id, name, price, stock, 'schoolSupply', 'School & Office Supplies', '✏️');
+    super(id, name, price, stock, 'schoolSupply', 'School & Office Supplies');
   }
 }
 
@@ -129,7 +128,7 @@ class ProductFactory {
       case 'schoolSupply':
         return new SchoolSupplyProduct(id, name, price, stock);
       default:
-        return new Product(id, name, price, stock, 'general', 'General Merchandise', '📦');
+        return new Product(id, name, price, stock, 'general', 'General Merchandise');
     }
   }
 }
@@ -365,7 +364,7 @@ class BulkDiscountStrategy extends DiscountStrategy {
     return subtotal * 0.10;
   }
   getName() {
-    return 'Bulk Purchase Discount (10%)';
+    return 'Bulk Purchase (10%)';
   }
 }
 
@@ -445,8 +444,7 @@ class Checkout {
         name: product.name,
         price: product.price,
         quantity: qty,
-        categoryLabel: product.categoryLabel,
-        icon: product.icon
+        categoryLabel: product.categoryLabel
       });
     }
 
@@ -572,7 +570,7 @@ const checkout = new Checkout();
 // ==============================
 
 /**
- * Toast Notification Helper
+ * Clean Professional Toast Notification Helper (with clean SVG icons)
  */
 function showToast(message, type = 'info') {
   const container = document.getElementById('toast-container');
@@ -581,15 +579,15 @@ function showToast(message, type = 'info') {
   const toast = document.createElement('div');
   toast.className = `toast toast-${type}`;
 
-  const iconMap = {
-    success: '✅',
-    error: '❌',
-    warning: '⚠️',
-    info: 'ℹ️'
+  const iconSvgMap = {
+    success: `<svg class="svg-icon svg-icon-sm text-success" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`,
+    error: `<svg class="svg-icon svg-icon-sm text-danger" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>`,
+    warning: `<svg class="svg-icon svg-icon-sm text-accent" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`,
+    info: `<svg class="svg-icon svg-icon-sm text-primary" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`
   };
 
   toast.innerHTML = `
-    <span>${iconMap[type] || 'ℹ️'}</span>
+    ${iconSvgMap[type] || iconSvgMap.info}
     <span>${message}</span>
   `;
 
@@ -598,9 +596,9 @@ function showToast(message, type = 'info') {
   setTimeout(() => {
     toast.style.opacity = '0';
     toast.style.transform = 'translateX(100%)';
-    toast.style.transition = 'all 0.3s ease';
-    setTimeout(() => toast.remove(), 300);
-  }, 3500);
+    toast.style.transition = 'all 0.25s ease';
+    setTimeout(() => toast.remove(), 250);
+  }, 3200);
 }
 
 /**
@@ -624,7 +622,7 @@ function navigateToSection(sectionId) {
     }
   });
 
-  // Always refresh relevant section contents when navigating
+  // Refresh view contents on navigation
   if (sectionId === 'dashboard') {
     renderDashboard();
   } else if (sectionId === 'inventory') {
@@ -636,7 +634,7 @@ function navigateToSection(sectionId) {
 }
 
 /**
- * Render Dashboard Cards & Recent Sales
+ * Render Dashboard Cards & Recent Completed Transactions
  */
 function renderDashboard() {
   const inventory = InventoryManager.getInstance();
@@ -659,7 +657,7 @@ function renderDashboard() {
   if (salesHistory.length === 0) {
     tableBody.innerHTML = `
       <tr>
-        <td colspan="5" class="empty-cell">No sales recorded yet. Process a sale in the Sales tab!</td>
+        <td colspan="5" class="empty-cell">No sales recorded yet. Process a sale in the Sales tab.</td>
       </tr>
     `;
     return;
@@ -670,10 +668,10 @@ function renderDashboard() {
     return `
       <tr>
         <td><strong>${sale.receiptNumber}</strong></td>
-        <td><small>${itemsSummary}</small></td>
+        <td><small class="text-secondary">${itemsSummary}</small></td>
         <td><span class="badge badge-info">${sale.discountStrategyName}</span></td>
-        <td><strong>${formatPHP(sale.finalTotal)}</strong></td>
-        <td><small class="text-muted">${sale.dateTime.split(' ')[1] || sale.dateTime}</small></td>
+        <td class="text-right"><strong>${formatPHP(sale.finalTotal)}</strong></td>
+        <td class="text-right"><small class="text-muted">${sale.dateTime.split(' ')[1] || sale.dateTime}</small></td>
       </tr>
     `;
   }).join('');
@@ -717,36 +715,34 @@ function renderInventoryTable() {
   }
 
   tableBody.innerHTML = products.map(product => {
-    // Stock status badge
+    // Stock status indicator
     let stockBadge = '';
     if (product.stock === 0) {
-      stockBadge = `<span class="badge badge-stock-out">Out of Stock (0)</span>`;
+      stockBadge = `<span class="badge badge-stock-out"><span class="status-dot"></span> Out of Stock (0)</span>`;
     } else if (product.stock <= 10) {
-      stockBadge = `<span class="badge badge-stock-low">Low Stock (${product.stock})</span>`;
+      stockBadge = `<span class="badge badge-stock-low"><span class="status-dot"></span> Low Stock (${product.stock})</span>`;
     } else {
-      stockBadge = `<span class="badge badge-stock-good">${product.stock} units</span>`;
+      stockBadge = `<span class="badge badge-stock-good"><span class="status-dot"></span> ${product.stock} in stock</span>`;
     }
-
-    // Category badge class
-    const categoryClass = `badge-${product.category}`;
 
     return `
       <tr>
-        <td><strong>${product.id}</strong></td>
+        <td><span style="font-family: monospace; font-weight: 700; color: #1e3a8a;">${product.id}</span></td>
         <td>
-          <span style="margin-right: 6px;">${product.icon}</span>
-          <strong>${product.name}</strong>
+          <strong style="color: #0f172a;">${product.name}</strong>
         </td>
-        <td><span class="badge ${categoryClass}">${product.categoryLabel}</span></td>
+        <td><span class="badge badge-category">${product.categoryLabel}</span></td>
         <td><strong>${formatPHP(product.price)}</strong></td>
         <td>${stockBadge}</td>
         <td class="text-center">
-          <div style="display: inline-flex; gap: 0.5rem;">
-            <button class="btn btn-sm btn-primary" onclick="prepareSaleForProduct('${product.id}')" title="Sell this item">
-              <span>🛒</span> Sell
+          <div style="display: inline-flex; gap: 0.4rem;">
+            <button class="btn btn-sm btn-primary" onclick="prepareSaleForProduct('${product.id}')" title="Sell this product">
+              <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+              <span>Sell</span>
             </button>
-            <button class="btn btn-sm btn-secondary" onclick="openRestockModal('${product.id}')" title="Restock product">
-              <span>📦</span> Restock
+            <button class="btn btn-sm btn-secondary" onclick="openRestockModal('${product.id}')" title="Restock inventory">
+              <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+              <span>Restock</span>
             </button>
           </div>
         </td>
@@ -763,12 +759,12 @@ function populateSalesProductDropdown(selectedId = '') {
   const selectElem = document.getElementById('sale-product-select');
   const products = inventory.getAllProducts();
 
-  selectElem.innerHTML = '<option value="" disabled selected>-- Select an item from inventory --</option>';
+  selectElem.innerHTML = '<option value="" disabled selected>Choose product from inventory...</option>';
 
   products.forEach(p => {
     const opt = document.createElement('option');
     opt.value = p.id;
-    opt.textContent = `${p.id} - ${p.name} (${formatPHP(p.price)} | Stock: ${p.stock})`;
+    opt.textContent = `${p.id} - ${p.name} (${formatPHP(p.price)} | Available: ${p.stock})`;
     if (p.stock === 0) {
       opt.textContent += ' [OUT OF STOCK]';
     }
@@ -808,9 +804,8 @@ function updateProductPreview() {
   }
 
   previewCard.style.display = 'flex';
-  document.getElementById('prev-prod-name').textContent = `${product.icon} ${product.name} (${product.id})`;
+  document.getElementById('prev-prod-name').textContent = `${product.name} (${product.id})`;
   document.getElementById('prev-prod-category').textContent = product.categoryLabel;
-  document.getElementById('prev-prod-category').className = `badge badge-${product.category}`;
   document.getElementById('prev-prod-price').textContent = formatPHP(product.price);
 
   const stockBadge = document.getElementById('prev-prod-stock');
@@ -821,7 +816,7 @@ function updateProductPreview() {
     stockBadge.textContent = `Low Stock (${product.stock} available)`;
     stockBadge.className = 'badge badge-stock-low';
   } else {
-    stockBadge.textContent = `${product.stock} available`;
+    stockBadge.textContent = `${product.stock} units available`;
     stockBadge.className = 'badge badge-stock-good';
   }
 
@@ -878,14 +873,14 @@ function renderCart() {
         <tr>
           <td>
             <strong>${item.name}</strong>
-            <br><small class="text-muted">${item.id}</small>
+            <br><small class="text-secondary" style="font-family: monospace;">${item.id}</small>
           </td>
           <td>${formatPHP(item.price)}</td>
           <td><strong>×${item.quantity}</strong></td>
           <td><strong>${formatPHP(itemTotal)}</strong></td>
           <td class="text-right">
-            <button class="btn btn-sm btn-outline text-danger" onclick="removeCartItem('${item.id}')" title="Remove item">
-              &times;
+            <button class="btn btn-sm btn-secondary text-danger" onclick="removeCartItem('${item.id}')" title="Remove item from cart">
+              <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
           </td>
         </tr>
@@ -929,7 +924,7 @@ function prepareSaleForProduct(productId) {
   populateSalesProductDropdown(productId);
   document.getElementById('sale-quantity').value = 1;
   updateProductPreview();
-  showToast(`Selected product for sale. Specify quantity and click Add to Cart.`, 'info');
+  showToast(`Loaded item into POS register. Specify quantity and click Add to Cart.`, 'info');
 }
 
 /**
@@ -944,7 +939,7 @@ function openRestockModal(productId) {
 
   currentRestockProductId = productId;
   document.getElementById('restock-prod-id').textContent = product.id;
-  document.getElementById('restock-prod-name').textContent = `${product.icon} ${product.name}`;
+  document.getElementById('restock-prod-name').textContent = product.name;
   document.getElementById('restock-current-stock').textContent = product.stock;
 
   const qtyInput = document.getElementById('restock-quantity-input');
@@ -1137,7 +1132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         populateSalesProductDropdown();
 
         // Navigate to Inventory to review newly added product
-        setTimeout(() => navigateToSection('inventory'), 600);
+        setTimeout(() => navigateToSection('inventory'), 500);
 
       } catch (err) {
         showToast(`Error adding product: ${err.message}`, 'error');
@@ -1309,14 +1304,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (isSame) {
         singletonResult.innerHTML = `
-          <span class="text-success">
-            ✅ PASS: (inv1 === inv2) is TRUE. Both references point to the exact same instance in memory!
+          <span class="text-success" style="display: inline-flex; align-items: center; gap: 0.35rem;">
+            <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>Verified: (inv1 === inv2) is TRUE. Single instance verified in memory.</span>
           </span>
         `;
       } else {
         singletonResult.innerHTML = `
-          <span class="text-danger">
-            ❌ FAIL: Instances are not identical.
+          <span class="text-danger" style="display: inline-flex; align-items: center; gap: 0.35rem;">
+            <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+            <span>Verification failed: Multiple instances detected.</span>
           </span>
         `;
       }

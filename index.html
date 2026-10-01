@@ -12,46 +12,86 @@
 </head>
 <body>
 
-  <!-- Toast Notification Container -->
+  <!-- Floating Toast Notification Container -->
   <div id="toast-container" class="toast-container" aria-live="polite"></div>
 
-  <!-- Header & Navigation -->
+  <!-- Enterprise Application Header & Top Bar -->
   <header class="app-header">
     <div class="header-container">
       <div class="brand">
-        <div class="brand-logo">🏪</div>
+        <div class="brand-icon">
+          <!-- Storefront SVG Icon -->
+          <svg class="svg-icon" viewBox="0 0 24 24">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </div>
         <div class="brand-info">
-          <h1 class="brand-title">Jen's Local Mart</h1>
-          <p class="brand-subtitle">Retail Store Management System</p>
+          <div class="brand-title">
+            <span>Jen's Local Mart</span>
+            <span class="store-status-pill">
+              <span class="status-dot"></span> Online
+            </span>
+          </div>
+          <span class="brand-subtitle">Retail Store Management & POS System</span>
         </div>
       </div>
-      <nav class="main-nav">
+
+      <!-- Segmented Navigation Bar -->
+      <nav class="main-nav" aria-label="Main Navigation">
         <button class="nav-btn active" data-section="dashboard">
-          <span class="nav-icon">📊</span>
-          <span class="nav-text">Dashboard</span>
+          <svg class="svg-icon" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="9"></rect>
+            <rect x="14" y="3" width="7" height="5"></rect>
+            <rect x="14" y="12" width="7" height="9"></rect>
+            <rect x="3" y="16" width="7" height="5"></rect>
+          </svg>
+          <span>Dashboard</span>
         </button>
         <button class="nav-btn" data-section="inventory">
-          <span class="nav-icon">📦</span>
-          <span class="nav-text">Inventory</span>
+          <svg class="svg-icon" viewBox="0 0 24 24">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+          </svg>
+          <span>Inventory</span>
         </button>
         <button class="nav-btn" data-section="add-product">
-          <span class="nav-icon">➕</span>
-          <span class="nav-text">Add Product</span>
+          <svg class="svg-icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="16"></line>
+            <line x1="8" y1="12" x2="16" y2="12"></line>
+          </svg>
+          <span>Add Product</span>
         </button>
         <button class="nav-btn" data-section="sales">
-          <span class="nav-icon">🛒</span>
-          <span class="nav-text">Sales</span>
+          <svg class="svg-icon" viewBox="0 0 24 24">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span>Sales & Checkout</span>
           <span id="nav-cart-badge" class="nav-badge" style="display: none;">0</span>
         </button>
         <button class="nav-btn" data-section="patterns">
-          <span class="nav-icon">🧩</span>
-          <span class="nav-text">Design Patterns</span>
+          <svg class="svg-icon" viewBox="0 0 24 24">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+          <span>Design Patterns</span>
         </button>
       </nav>
+
+      <!-- Terminal Session Metadata -->
+      <div class="terminal-meta">
+        <span>Register: <span class="terminal-badge">POS-01</span></span>
+        <span>Currency: <strong>PHP (₱)</strong></span>
+      </div>
     </div>
   </header>
 
-  <!-- Main Content Container -->
+  <!-- Main Application Body -->
   <main class="main-content">
 
     <!-- ==================== 1. DASHBOARD SECTION ==================== -->
@@ -59,84 +99,146 @@
       <div class="section-header">
         <div>
           <h2 class="section-title">Dashboard Overview</h2>
-          <p class="section-subtitle">Real-time statistics for Jen's Local Mart</p>
+          <p class="section-subtitle">Real-time inventory levels and sales metrics for Jen's Local Mart</p>
         </div>
-        <div class="date-badge" id="current-date-badge">Philippine Peso (₱) Store Operations</div>
+        <div class="currency-badge">
+          <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="6" x2="12" y2="18"></line>
+            <path d="M9 10h6a2 2 0 0 1 0 4H9"></path>
+          </svg>
+          <span>Operating Currency: Philippine Peso (₱)</span>
+        </div>
       </div>
 
-      <!-- Stat Cards Grid -->
+      <!-- Real-time KPI Metric Cards -->
       <div class="stats-grid">
         <div class="stat-card stat-primary">
-          <div class="stat-header">
+          <div class="stat-top">
             <span class="stat-label">Total Products</span>
-            <span class="stat-icon">🏷️</span>
+            <div class="stat-icon-wrapper">
+              <svg class="svg-icon" viewBox="0 0 24 24">
+                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                <line x1="7" y1="7" x2="7.01" y2="7"></line>
+              </svg>
+            </div>
           </div>
-          <div class="stat-value" id="dash-total-products">0</div>
-          <div class="stat-desc">Active catalog items</div>
+          <div class="stat-value tabular-nums" id="dash-total-products">0</div>
+          <div class="stat-footer">
+            <span class="stat-pill stat-pill-info">Active SKUs</span>
+            <span>Catalog items registered</span>
+          </div>
         </div>
 
         <div class="stat-card stat-success">
-          <div class="stat-header">
+          <div class="stat-top">
             <span class="stat-label">Total Stock</span>
-            <span class="stat-icon">📦</span>
+            <div class="stat-icon-wrapper">
+              <svg class="svg-icon" viewBox="0 0 24 24">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              </svg>
+            </div>
           </div>
-          <div class="stat-value" id="dash-total-stock">0</div>
-          <div class="stat-desc">Units currently in inventory</div>
+          <div class="stat-value tabular-nums" id="dash-total-stock">0</div>
+          <div class="stat-footer">
+            <span class="stat-pill stat-pill-healthy">In Stock</span>
+            <span>Total units in store storage</span>
+          </div>
         </div>
 
         <div class="stat-card stat-warning">
-          <div class="stat-header">
+          <div class="stat-top">
             <span class="stat-label">Low Stock Products</span>
-            <span class="stat-icon">⚠️</span>
+            <div class="stat-icon-wrapper">
+              <svg class="svg-icon" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </div>
           </div>
-          <div class="stat-value" id="dash-low-stock">0</div>
-          <div class="stat-desc">Items with 10 or fewer units</div>
+          <div class="stat-value tabular-nums" id="dash-low-stock">0</div>
+          <div class="stat-footer">
+            <span class="stat-pill stat-pill-warning">Threshold &le; 10</span>
+            <span>Requires restocking review</span>
+          </div>
         </div>
 
         <div class="stat-card stat-accent">
-          <div class="stat-header">
+          <div class="stat-top">
             <span class="stat-label">Today's Sales</span>
-            <span class="stat-icon">💰</span>
+            <div class="stat-icon-wrapper">
+              <svg class="svg-icon" viewBox="0 0 24 24">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+            </div>
           </div>
-          <div class="stat-value" id="dash-today-sales">₱0.00</div>
-          <div class="stat-desc">Gross revenue today</div>
+          <div class="stat-value tabular-nums" id="dash-today-sales">₱0.00</div>
+          <div class="stat-footer">
+            <span class="stat-pill stat-pill-healthy">Gross Revenue</span>
+            <span>Processed during current shift</span>
+          </div>
         </div>
       </div>
 
-      <!-- Quick Actions & Highlights -->
+      <!-- Quick Actions and Recent Transactions Ledger -->
       <div class="dashboard-columns">
-        <!-- Quick Actions Panel -->
-        <div class="card quick-actions-card">
-          <h3 class="card-title">⚡ Quick Operations</h3>
-          <p class="card-subtitle">Frequently used store management actions</p>
-          <div class="quick-btn-group">
+        <!-- Quick Backoffice Actions Panel -->
+        <div class="card">
+          <h3 class="card-title">Quick Operations</h3>
+          <p class="card-subtitle">Frequently accessed POS operations</p>
+          <div class="quick-actions-panel">
             <button class="btn btn-primary" onclick="navigateToSection('sales')">
-              <span>🛒</span> Go to Sales / Checkout
+              <svg class="svg-icon" viewBox="0 0 24 24">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+              </svg>
+              <span>Open Sales Terminal</span>
             </button>
             <button class="btn btn-secondary" onclick="navigateToSection('add-product')">
-              <span>➕</span> Add New Product
+              <svg class="svg-icon" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="16"></line>
+                <line x1="8" y1="12" x2="16" y2="12"></line>
+              </svg>
+              <span>Catalog New Product</span>
             </button>
-            <button class="btn btn-outline" onclick="navigateToSection('inventory')">
-              <span>📦</span> View Full Inventory
+            <button class="btn btn-secondary" onclick="navigateToSection('inventory')">
+              <svg class="svg-icon" viewBox="0 0 24 24">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              </svg>
+              <span>Manage Stock Inventory</span>
             </button>
           </div>
 
-          <div class="patterns-callout">
-            <div class="callout-header">
-              <span class="callout-icon">🧩</span>
-              <strong>Architecture Highlights</strong>
+          <div class="arch-summary-callout">
+            <div class="callout-title">
+              <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
+              </svg>
+              <span>Design Pattern Architecture</span>
             </div>
-            <p>This application implements <strong>Factory</strong>, <strong>Singleton</strong>, and <strong>Strategy</strong> design patterns in vanilla JavaScript.</p>
-            <button class="btn-link" onclick="navigateToSection('patterns')">Explore Design Patterns &rarr;</button>
+            <p>Built with <strong>Factory</strong>, <strong>Singleton</strong>, and <strong>Strategy</strong> design patterns managing object creation, state synchronization, and dynamic discount algorithms.</p>
+            <button class="btn-link" onclick="navigateToSection('patterns')">
+              <span>View architectural documentation</span>
+              <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
           </div>
         </div>
 
         <!-- Recent Transactions Panel -->
-        <div class="card transactions-card">
+        <div class="card">
           <div class="card-header-flex">
             <div>
-              <h3 class="card-title">🧾 Recent Completed Sales</h3>
-              <p class="card-subtitle">Sales recorded today</p>
+              <h3 class="card-title">Completed Transactions</h3>
+              <p class="card-subtitle">Sales processed through the POS register today</p>
             </div>
             <span class="badge badge-info" id="transactions-count">0 Sales</span>
           </div>
@@ -145,15 +247,15 @@
               <thead>
                 <tr>
                   <th>Receipt #</th>
-                  <th>Items</th>
-                  <th>Discount</th>
-                  <th>Total (₱)</th>
-                  <th>Time</th>
+                  <th>Purchased Items</th>
+                  <th>Discount Strategy</th>
+                  <th class="text-right">Total (₱)</th>
+                  <th class="text-right">Timestamp</th>
                 </tr>
               </thead>
               <tbody id="dash-transactions-body">
                 <tr>
-                  <td colspan="5" class="empty-cell">No sales recorded yet. Process a sale in the Sales tab!</td>
+                  <td colspan="5" class="empty-cell">No sales recorded yet. Process a sale in the Sales tab.</td>
                 </tr>
               </tbody>
             </table>
@@ -166,36 +268,43 @@
     <section id="section-inventory" class="content-section">
       <div class="section-header">
         <div>
-          <h2 class="section-title">Product Inventory</h2>
-          <p class="section-subtitle">Manage store products, stock levels, and instant sales</p>
+          <h2 class="section-title">Stock Inventory Management</h2>
+          <p class="section-subtitle">Real-time SKU catalog, stock monitoring, and inventory actions</p>
         </div>
         <button class="btn btn-primary" onclick="navigateToSection('add-product')">
-          <span>➕</span> Add New Product
+          <svg class="svg-icon" viewBox="0 0 24 24">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>Add New Product</span>
         </button>
       </div>
 
-      <!-- Filters & Search Toolbar -->
+      <!-- Search & Category Filters -->
       <div class="card toolbar-card">
         <div class="toolbar-wrapper">
           <div class="search-box">
-            <span class="search-icon">🔍</span>
-            <input type="text" id="inventory-search" placeholder="Search by Product ID or Name..." autocomplete="off">
+            <svg class="svg-icon search-icon-svg" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="inventory-search" placeholder="Search by SKU, product name, or category..." autocomplete="off">
           </div>
           <div class="filter-box">
             <label for="inventory-category-filter">Category:</label>
             <select id="inventory-category-filter">
-              <option value="all">All Categories</option>
+              <option value="all">All Product Categories</option>
               <option value="food">Food & Snacks</option>
               <option value="beverage">Beverages</option>
               <option value="personalCare">Personal Care</option>
-              <option value="household">Household</option>
-              <option value="schoolSupply">School / Office Supplies</option>
+              <option value="household">Household Products</option>
+              <option value="schoolSupply">School & Office Supplies</option>
             </select>
           </div>
         </div>
       </div>
 
-      <!-- Inventory Table Card -->
+      <!-- Inventory Data Table -->
       <div class="card">
         <div class="table-responsive">
           <table class="data-table" id="inventory-table">
@@ -210,7 +319,7 @@
               </tr>
             </thead>
             <tbody id="inventory-table-body">
-              <!-- Rendered dynamically by JavaScript -->
+              <!-- Rendered dynamically by app.js -->
             </tbody>
           </table>
         </div>
@@ -224,23 +333,28 @@
     <section id="section-add-product" class="content-section">
       <div class="section-header">
         <div>
-          <h2 class="section-title">Add New Product</h2>
-          <p class="section-subtitle">Create and catalog a new product via the ProductFactory</p>
+          <h2 class="section-title">Catalog New Product</h2>
+          <p class="section-subtitle">Register a new store inventory item via the ProductFactory</p>
         </div>
       </div>
 
       <div class="form-layout">
         <!-- Add Product Form Card -->
-        <div class="card form-card">
-          <div class="pattern-tag">
-            <span>🏭</span> Uses <strong>Factory Pattern</strong> (`ProductFactory.createProduct`)
+        <div class="card">
+          <div class="pattern-implementation-pill">
+            <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+            <span>Instantiated via <code>ProductFactory.createProduct()</code></span>
           </div>
           
           <form id="add-product-form" novalidate>
             <div class="form-group">
               <label for="prod-id">Product ID <span class="required">*</span></label>
               <input type="text" id="prod-id" placeholder="e.g., P007" required maxlength="10">
-              <small class="form-hint">Unique identifier for the item (e.g. P007, P008).</small>
+              <small class="form-hint">Unique identifier / SKU for stock tracking.</small>
             </div>
 
             <div class="form-group">
@@ -251,19 +365,19 @@
             <div class="form-group">
               <label for="prod-category">Category <span class="required">*</span></label>
               <select id="prod-category" required>
-                <option value="" disabled selected>-- Select a Category --</option>
+                <option value="" disabled selected>Select category...</option>
                 <option value="food">Food and Snacks</option>
                 <option value="beverage">Beverages</option>
                 <option value="personalCare">Personal Care</option>
                 <option value="household">Household Products</option>
                 <option value="schoolSupply">School / Office Supplies</option>
               </select>
-              <small class="form-hint">The Factory determines the specialized object class based on this category.</small>
+              <small class="form-hint">The Factory uses this category to instantiate the specialized subclass.</small>
             </div>
 
             <div class="form-row">
               <div class="form-group col-half">
-                <label for="prod-price">Price (₱) <span class="required">*</span></label>
+                <label for="prod-price">Retail Price (₱) <span class="required">*</span></label>
                 <div class="input-prefix-wrapper">
                   <span class="input-prefix">₱</span>
                   <input type="number" id="prod-price" placeholder="0.00" min="0.01" step="0.50" required>
@@ -277,44 +391,69 @@
             </div>
 
             <div class="form-actions">
-              <button type="submit" class="btn btn-primary btn-large">
-                <span>➕</span> Add Product
+              <button type="submit" class="btn btn-primary btn-lg">
+                <svg class="svg-icon" viewBox="0 0 24 24">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span>Add Product</span>
               </button>
               <button type="reset" class="btn btn-secondary">
-                <span>↺</span> Reset Form
+                <span>Reset</span>
               </button>
             </div>
           </form>
         </div>
 
-        <!-- Educational Info Card -->
+        <!-- Educational Sidebar Card -->
         <div class="card info-sidebar-card">
-          <h3 class="card-title">ℹ️ Factory & Singleton in Action</h3>
-          <p>When you click <strong>Add Product</strong>, the following takes place:</p>
+          <h3 class="card-title">Architecture Pipeline</h3>
+          <p>Submitting this form triggers the following execution pipeline:</p>
           <ol class="info-steps">
             <li>
-              <strong>Factory Invocation:</strong>
-              <code>ProductFactory.createProduct(category, id, name, price, stock)</code> creates a clean specialized product object.
+              <strong>Factory Instantiation:</strong><br>
+              <code>ProductFactory.createProduct(category, id, name, price, stock)</code> returns a polymorphic product instance.
             </li>
             <li>
-              <strong>Singleton Access:</strong>
-              The product is saved into <code>InventoryManager.getInstance()</code>, guaranteeing unified state.
+              <strong>Singleton Storage:</strong><br>
+              The product object is committed to <code>InventoryManager.getInstance()</code>, maintaining synchronized central state.
             </li>
             <li>
-              <strong>Reactive Updates:</strong>
-              The Dashboard and Inventory tables automatically refresh their counts.
+              <strong>Reactive UI Synchronization:</strong><br>
+              Dashboard metrics and the inventory data table refresh immediately.
             </li>
           </ol>
-          <div class="category-legend">
-            <strong>Supported Categories:</strong>
-            <ul>
-              <li>🍲 <code>food</code> &rarr; Food & Snacks</li>
-              <li>🥤 <code>beverage</code> &rarr; Beverages</li>
-              <li>🧴 <code>personalCare</code> &rarr; Personal Care</li>
-              <li>🧹 <code>household</code> &rarr; Household</li>
-              <li>✏️ <code>schoolSupply</code> &rarr; School & Office Supplies</li>
-            </ul>
-          </div>
+
+          <table class="category-specs-table">
+            <thead>
+              <tr>
+                <th>Category Key</th>
+                <th>Factory Target Class</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>food</code></td>
+                <td><code>FoodProduct</code></td>
+              </tr>
+              <tr>
+                <td><code>beverage</code></td>
+                <td><code>BeverageProduct</code></td>
+              </tr>
+              <tr>
+                <td><code>personalCare</code></td>
+                <td><code>PersonalCareProduct</code></td>
+              </tr>
+              <tr>
+                <td><code>household</code></td>
+                <td><code>HouseholdProduct</code></td>
+              </tr>
+              <tr>
+                <td><code>schoolSupply</code></td>
+                <td><code>SchoolSupplyProduct</code></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
@@ -323,29 +462,28 @@
     <section id="section-sales" class="content-section">
       <div class="section-header">
         <div>
-          <h2 class="section-title">Sales & Checkout</h2>
-          <p class="section-subtitle">Process customer purchases with interchangeable discount strategies</p>
+          <h2 class="section-title">Sales Terminal (POS)</h2>
+          <p class="section-subtitle">Real-time checkout, stock deduction, and interchangeable discount strategies</p>
         </div>
       </div>
 
       <div class="sales-layout">
-        <!-- Left: Product Selection & Add to Cart -->
-        <div class="card sales-selection-card">
-          <h3 class="card-title">1. Select Product to Sell</h3>
-          <p class="card-subtitle">Choose an item from inventory and specify quantity</p>
+        <!-- Left: Product Selection & Staging -->
+        <div class="card pos-panel">
+          <h3 class="card-title">1. Item Selection</h3>
+          <p class="card-subtitle">Select an inventory item and enter the transaction quantity</p>
 
           <div class="form-group">
-            <label for="sale-product-select">Select Product:</label>
+            <label for="sale-product-select">Product:</label>
             <select id="sale-product-select">
-              <option value="" disabled selected>-- Select an item from inventory --</option>
-              <!-- Populated by JS -->
+              <option value="" disabled selected>Choose product from inventory...</option>
             </select>
           </div>
 
           <!-- Selected Product Details Preview -->
           <div id="sale-product-preview" class="product-preview-card" style="display: none;">
             <div class="preview-row">
-              <span class="preview-label">Product Name:</span>
+              <span class="preview-label">Selected Item:</span>
               <strong id="prev-prod-name">-</strong>
             </div>
             <div class="preview-row">
@@ -354,48 +492,61 @@
             </div>
             <div class="preview-row">
               <span class="preview-label">Unit Price:</span>
-              <strong id="prev-prod-price" class="text-primary">₱0.00</strong>
+              <strong id="prev-prod-price" class="text-primary tabular-nums">₱0.00</strong>
             </div>
             <div class="preview-row">
               <span class="preview-label">Available Stock:</span>
-              <span id="prev-prod-stock" class="badge badge-stock">-</span>
+              <span id="prev-prod-stock" class="badge">-</span>
             </div>
           </div>
 
           <div class="form-group">
-            <label for="sale-quantity">Quantity to Sell:</label>
+            <label for="sale-quantity">Quantity:</label>
             <div class="quantity-control-wrapper">
-              <button type="button" class="qty-btn" id="btn-qty-minus">-</button>
+              <button type="button" class="qty-btn" id="btn-qty-minus" aria-label="Decrease quantity">-</button>
               <input type="number" id="sale-quantity" value="1" min="1" step="1">
-              <button type="button" class="qty-btn" id="btn-qty-plus">+</button>
+              <button type="button" class="qty-btn" id="btn-qty-plus" aria-label="Increase quantity">+</button>
             </div>
           </div>
 
           <div class="item-subtotal-preview">
             <span>Item Subtotal:</span>
-            <strong id="sale-item-subtotal">₱0.00</strong>
+            <strong id="sale-item-subtotal" class="tabular-nums">₱0.00</strong>
           </div>
 
           <!-- Stock Error Alert Box -->
           <div id="stock-error-box" class="alert-box alert-error" style="display: none;">
-            <span class="alert-icon">⚠️</span>
+            <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
             <span id="stock-error-message">Insufficient stock!</span>
           </div>
 
           <button type="button" id="btn-add-to-cart" class="btn btn-primary btn-block">
-            <span>🛒</span> Add to Cart
+            <svg class="svg-icon" viewBox="0 0 24 24">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span>Add to Cart</span>
           </button>
         </div>
 
-        <!-- Right: Cart & Checkout Summary -->
-        <div class="card checkout-card">
+        <!-- Right: Cart & Checkout Register -->
+        <div class="card pos-panel">
           <div class="card-header-flex">
             <div>
-              <h3 class="card-title">2. Customer Cart</h3>
-              <p class="card-subtitle">Items ready for checkout</p>
+              <h3 class="card-title">2. Customer Order Cart</h3>
+              <p class="card-subtitle">Staged items awaiting transaction completion</p>
             </div>
-            <button type="button" id="btn-clear-cart" class="btn btn-sm btn-outline text-danger" style="display: none;">
-              <span>🗑️</span> Clear Cart
+            <button type="button" id="btn-clear-cart" class="btn btn-sm btn-secondary text-danger" style="display: none;">
+              <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+              <span>Clear Cart</span>
             </button>
           </div>
 
@@ -405,10 +556,10 @@
               <thead>
                 <tr>
                   <th>Product</th>
-                  <th>Price</th>
+                  <th>Unit Price</th>
                   <th>Qty</th>
-                  <th>Total</th>
-                  <th></th>
+                  <th>Line Total</th>
+                  <th class="text-right">Action</th>
                 </tr>
               </thead>
               <tbody id="cart-table-body">
@@ -419,13 +570,17 @@
             </table>
           </div>
 
-          <!-- Discount Strategy Selector (Strategy Pattern) -->
+          <!-- Strategy Pattern: Discount Strategy Selector -->
           <div class="discount-strategy-wrapper">
             <div class="strategy-header">
               <label class="strategy-title">
-                <span>🎯</span> <strong>Select Discount Strategy:</strong>
+                <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                  <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                </svg>
+                <span>Discount Strategy:</span>
               </label>
-              <span class="pattern-pill">Strategy Pattern</span>
+              <span class="pattern-tag-sm">Strategy Pattern</span>
             </div>
             
             <div class="strategy-options">
@@ -433,14 +588,14 @@
                 <input type="radio" name="discount-strategy" value="regular" checked>
                 <div class="option-content">
                   <div class="option-title">Regular Customer</div>
-                  <div class="option-desc">No discount (0%)</div>
+                  <div class="option-desc">Standard pricing (0% off)</div>
                 </div>
               </label>
 
               <label class="strategy-option">
                 <input type="radio" name="discount-strategy" value="student">
                 <div class="option-content">
-                  <div class="option-title">Student Discount 🎓</div>
+                  <div class="option-title">Student Discount</div>
                   <div class="option-desc">5% discount on total</div>
                 </div>
               </label>
@@ -448,7 +603,7 @@
               <label class="strategy-option">
                 <input type="radio" name="discount-strategy" value="bulk">
                 <div class="option-content">
-                  <div class="option-title">Bulk Purchase 📦</div>
+                  <div class="option-title">Bulk Purchase</div>
                   <div class="option-desc">10% discount on total</div>
                 </div>
               </label>
@@ -459,54 +614,62 @@
           <div class="checkout-summary">
             <div class="summary-line">
               <span>Subtotal:</span>
-              <span id="checkout-subtotal" class="summary-val">₱0.00</span>
+              <span id="checkout-subtotal" class="summary-val tabular-nums">₱0.00</span>
             </div>
             <div class="summary-line text-success">
-              <span id="discount-label">Discount (0%):</span>
-              <span id="checkout-discount" class="summary-val">-₱0.00</span>
+              <span id="discount-label">Discount (Regular Customer):</span>
+              <span id="checkout-discount" class="summary-val tabular-nums">-₱0.00</span>
             </div>
             <div class="summary-divider"></div>
             <div class="summary-line summary-total">
               <span>Final Total:</span>
-              <span id="checkout-total" class="summary-val">₱0.00</span>
+              <span id="checkout-total" class="summary-val tabular-nums">₱0.00</span>
             </div>
           </div>
 
           <!-- Complete Sale Button -->
-          <button type="button" id="btn-complete-sale" class="btn btn-accent btn-large btn-block" disabled>
-            <span>✅</span> Complete Sale
+          <button type="button" id="btn-complete-sale" class="btn btn-dark btn-lg btn-block" disabled>
+            <svg class="svg-icon" viewBox="0 0 24 24">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Complete Sale</span>
           </button>
         </div>
       </div>
     </section>
 
-    <!-- ==================== 5. DESIGN PATTERNS USED SECTION ==================== -->
+    <!-- ==================== 5. DESIGN PATTERNS SECTION ==================== -->
     <section id="section-patterns" class="content-section">
       <div class="section-header">
         <div>
           <h2 class="section-title">Design Patterns Used</h2>
-          <p class="section-subtitle">Real-world implementation of GoF Design Patterns in JavaScript</p>
+          <p class="section-subtitle">Gang of Four (GoF) architectural design patterns powering the store management engine</p>
         </div>
       </div>
 
-      <!-- Required Overview Cards -->
+      <!-- Required Pattern Cards -->
       <div class="patterns-grid">
         <!-- 1. Factory Pattern -->
         <div class="card pattern-card">
-          <div class="pattern-card-header">
-            <div class="pattern-icon-badge factory-color">🏭</div>
-            <div>
-              <h3 class="pattern-name">Factory Pattern</h3>
-              <p class="pattern-tagline">Creates different product objects.</p>
+          <div>
+            <div class="pattern-card-header">
+              <div class="pattern-icon-badge factory-color">
+                <svg class="svg-icon" viewBox="0 0 24 24">
+                  <path d="M2 20h20"></path>
+                  <path d="M5 20V8l5 4V8l5 4V4h5v16"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="pattern-name">Factory Pattern</h3>
+                <p class="pattern-tagline">Creates different product objects.</p>
+              </div>
             </div>
-          </div>
-          <div class="pattern-body">
             <p class="pattern-explanation">
-              <strong>How it works:</strong> Instead of invoking specialized product constructors directly in UI forms, the client delegates creation to <code>ProductFactory.createProduct(category, id, name, price, stock)</code>.
+              <strong>Technical Implementation:</strong> Client layers delegate concrete instantiation to <code>ProductFactory.createProduct(category, id, name, price, stock)</code>. The factory evaluates the category key and manufactures the corresponding subclass.
             </p>
             <div class="code-snippet-box">
-<pre><code>// Example from app.js:
-ProductFactory.createProduct(
+<pre><code>// Factory pattern instantiation
+const item = ProductFactory.createProduct(
   "food",
   "P001",
   "Pancit Canton",
@@ -514,47 +677,58 @@ ProductFactory.createProduct(
   50
 );</code></pre>
             </div>
-            <div class="pattern-benefits">
-              <strong>In this application:</strong>
-              <ul>
-                <li>Instantiates proper subclasses: <code>FoodProduct</code>, <code>BeverageProduct</code>, <code>PersonalCareProduct</code>, <code>HouseholdProduct</code>, <code>SchoolSupplyProduct</code>.</li>
-                <li>Encapsulates category attributes (icons, descriptions) in one location.</li>
-              </ul>
-            </div>
+          </div>
+          <div class="pattern-benefits">
+            <strong>Subclasses Manufactured:</strong>
+            <ul>
+              <li><code>FoodProduct</code> (Food & Snacks)</li>
+              <li><code>BeverageProduct</code> (Beverages)</li>
+              <li><code>PersonalCareProduct</code> (Personal Care)</li>
+              <li><code>HouseholdProduct</code> (Household)</li>
+              <li><code>SchoolSupplyProduct</code> (School & Office Supplies)</li>
+            </ul>
           </div>
         </div>
 
         <!-- 2. Singleton Pattern -->
         <div class="card pattern-card">
-          <div class="pattern-card-header">
-            <div class="pattern-icon-badge singleton-color">🏛️</div>
-            <div>
-              <h3 class="pattern-name">Singleton Pattern</h3>
-              <p class="pattern-tagline">Maintains one central inventory manager.</p>
+          <div>
+            <div class="pattern-card-header">
+              <div class="pattern-icon-badge singleton-color">
+                <svg class="svg-icon" viewBox="0 0 24 24">
+                  <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                  <path d="M2 17l10 5 10-5"></path>
+                  <path d="M2 12l10 5 10-5"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="pattern-name">Singleton Pattern</h3>
+                <p class="pattern-tagline">Maintains one central inventory manager.</p>
+              </div>
             </div>
-          </div>
-          <div class="pattern-body">
             <p class="pattern-explanation">
-              <strong>How it works:</strong> Ensures only ONE instance of <code>InventoryManager</code> exists across the entire app. Any call to <code>InventoryManager.getInstance()</code> returns the identical memory reference.
+              <strong>Technical Implementation:</strong> <code>InventoryManager</code> enforces a single memory instance via <code>getInstance()</code>. All application modules share this centralized reference to prevent data divergence.
             </p>
             <div class="code-snippet-box">
-<pre><code>// Example from app.js:
+<pre><code>// Singleton access
 const inventory = InventoryManager.getInstance();
 const inventory2 = InventoryManager.getInstance();
 console.log(inventory === inventory2); // true</code></pre>
             </div>
-            <div class="pattern-benefits">
-              <strong>Why it's essential for Inventory:</strong>
-              <ul>
-                <li>A retail store has only one physical stockroom.</li>
-                <li>Prevents desynchronized stock counts between Dashboard, Tables, and Checkout.</li>
-                <li>Provides a single source of truth for all additions, sales, and restocking.</li>
-              </ul>
-            </div>
-            <!-- Live verification widget -->
+          </div>
+          <div class="pattern-benefits">
+            <strong>Why Singleton is Essential:</strong>
+            <ul>
+              <li>Guarantees a single source of truth for stock counts across all views.</li>
+              <li>Prevents concurrent overselling between POS and Inventory tables.</li>
+              <li>Synchronizes restocking events immediately.</li>
+            </ul>
             <div class="live-pattern-test">
-              <button type="button" class="btn btn-sm btn-outline" id="btn-test-singleton">
-                🧪 Run Live Singleton Test
+              <button type="button" class="btn btn-sm btn-secondary" id="btn-test-singleton">
+                <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Verify Singleton Instance</span>
               </button>
               <span id="singleton-test-result" class="test-result"></span>
             </div>
@@ -563,31 +737,37 @@ console.log(inventory === inventory2); // true</code></pre>
 
         <!-- 3. Strategy Pattern -->
         <div class="card pattern-card">
-          <div class="pattern-card-header">
-            <div class="pattern-icon-badge strategy-color">🎯</div>
-            <div>
-              <h3 class="pattern-name">Strategy Pattern</h3>
-              <p class="pattern-tagline">Allows different discount strategies to be selected.</p>
+          <div>
+            <div class="pattern-card-header">
+              <div class="pattern-icon-badge strategy-color">
+                <svg class="svg-icon" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <circle cx="12" cy="12" r="6"></circle>
+                  <circle cx="12" cy="12" r="2"></circle>
+                </svg>
+              </div>
+              <div>
+                <h3 class="pattern-name">Strategy Pattern</h3>
+                <p class="pattern-tagline">Allows different discount strategies to be selected.</p>
+              </div>
             </div>
-          </div>
-          <div class="pattern-body">
             <p class="pattern-explanation">
-              <strong>How it works:</strong> Encapsulates different discount algorithms into separate strategy classes (<code>RegularDiscountStrategy</code>, <code>StudentDiscountStrategy</code>, <code>BulkDiscountStrategy</code>) sharing a common interface <code>calculateDiscount(amount)</code>.
+              <strong>Technical Implementation:</strong> Encapsulates discount algorithms into interchangeable classes sharing the uniform <code>calculateDiscount(amount)</code> interface contract.
             </p>
             <div class="code-snippet-box">
-<pre><code>// Example from app.js:
+<pre><code>// Dynamic strategy swapping
 checkout.setDiscountStrategy(new StudentDiscountStrategy());
-const discount = checkout.calculateDiscount(subtotal);</code></pre>
+const discount = checkout.calculateDiscount(subtotal);
+const finalTotal = checkout.calculateTotal();</code></pre>
             </div>
-            <div class="pattern-benefits">
-              <strong>In this application:</strong>
-              <ul>
-                <li><strong>Regular Customer:</strong> 0% discount.</li>
-                <li><strong>Student Discount:</strong> 5% discount (<code>amount * 0.05</code>).</li>
-                <li><strong>Bulk Purchase:</strong> 10% discount (<code>amount * 0.10</code>).</li>
-                <li>The Checkout logic remains unchanged when switching algorithms.</li>
-              </ul>
-            </div>
+          </div>
+          <div class="pattern-benefits">
+            <strong>Concrete Strategies:</strong>
+            <ul>
+              <li><code>RegularDiscountStrategy</code> &rarr; 0% discount</li>
+              <li><code>StudentDiscountStrategy</code> &rarr; 5% discount (<code>amount * 0.05</code>)</li>
+              <li><code>BulkDiscountStrategy</code> &rarr; 10% discount (<code>amount * 0.10</code>)</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -599,25 +779,25 @@ const discount = checkout.calculateDiscount(subtotal);</code></pre>
   <div id="restock-modal" class="modal-overlay" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-header">
-        <h3 class="modal-title">📦 Restock Product</h3>
-        <button type="button" class="modal-close-btn" id="btn-close-restock">&times;</button>
+        <h3 class="modal-title">Restock Product Inventory</h3>
+        <button type="button" class="modal-close-btn" id="btn-close-restock" aria-label="Close dialog">&times;</button>
       </div>
       <div class="modal-body">
         <div class="restock-product-info">
           <div class="restock-info-item">
             <span class="info-label">Product ID:</span>
-            <span class="info-value" id="restock-prod-id">P001</span>
+            <strong id="restock-prod-id">P001</strong>
           </div>
           <div class="restock-info-item">
             <span class="info-label">Product Name:</span>
-            <span class="info-value" id="restock-prod-name">Pancit Canton</span>
+            <strong id="restock-prod-name">Pancit Canton</strong>
           </div>
         </div>
 
         <div class="restock-calculation-box">
           <div class="calc-row">
             <span>Current Stock:</span>
-            <strong id="restock-current-stock" class="text-muted">10</strong>
+            <strong id="restock-current-stock" class="tabular-nums">10</strong>
           </div>
           <div class="calc-row">
             <label for="restock-quantity-input">Restock Quantity to Add:</label>
@@ -625,8 +805,8 @@ const discount = checkout.calculateDiscount(subtotal);</code></pre>
           </div>
           <div class="calc-divider"></div>
           <div class="calc-row new-stock-row">
-            <span>New Stock:</span>
-            <strong id="restock-new-stock" class="text-success">20</strong>
+            <span>Projected New Stock:</span>
+            <strong id="restock-new-stock" class="text-success tabular-nums">20</strong>
           </div>
         </div>
       </div>
@@ -637,18 +817,18 @@ const discount = checkout.calculateDiscount(subtotal);</code></pre>
     </div>
   </div>
 
-  <!-- ==================== RECEIPT MODAL ==================== -->
+  <!-- ==================== TRANSACTION RECEIPT MODAL ==================== -->
   <div id="receipt-modal" class="modal-overlay" aria-hidden="true">
     <div class="modal-dialog receipt-dialog">
       <div class="modal-header">
-        <h3 class="modal-title">🧾 Transaction Receipt</h3>
-        <button type="button" class="modal-close-btn" id="btn-close-receipt">&times;</button>
+        <h3 class="modal-title">Transaction Receipt</h3>
+        <button type="button" class="modal-close-btn" id="btn-close-receipt" aria-label="Close receipt">&times;</button>
       </div>
       <div class="modal-body">
         <div class="receipt-paper" id="receipt-content">
           <div class="receipt-header">
             <h4>JEN'S LOCAL MART</h4>
-            <p>Local Retail Store Management</p>
+            <p>Neighborhood Retail & Essentials</p>
             <p class="receipt-meta" id="receipt-datetime">Date: 2026-10-01 16:30</p>
             <p class="receipt-meta" id="receipt-number">Receipt #: REC-1001</p>
           </div>
@@ -670,36 +850,47 @@ const discount = checkout.calculateDiscount(subtotal);</code></pre>
           <div class="receipt-summary">
             <div class="receipt-line">
               <span>Subtotal:</span>
-              <span id="receipt-subtotal">₱0.00</span>
+              <span id="receipt-subtotal" class="tabular-nums">₱0.00</span>
             </div>
             <div class="receipt-line">
               <span id="receipt-discount-name">Discount:</span>
-              <span id="receipt-discount-amount">-₱0.00</span>
+              <span id="receipt-discount-amount" class="tabular-nums">-₱0.00</span>
             </div>
             <div class="receipt-line receipt-grand-total">
               <span>TOTAL (PHP):</span>
-              <strong id="receipt-final-total">₱0.00</strong>
+              <strong id="receipt-final-total" class="tabular-nums">₱0.00</strong>
             </div>
           </div>
           <div class="receipt-divider">--------------------------------</div>
           <div class="receipt-footer">
             <p>Thank you for shopping at Jen's Local Mart!</p>
-            <p>Maraming Salamat Po! Mabuhay!</p>
+            <p>Please retain this receipt for your records.</p>
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" id="btn-done-receipt">Close</button>
-        <button type="button" class="btn btn-primary" onclick="window.print()">🖨️ Print Receipt</button>
+        <button type="button" class="btn btn-primary" onclick="window.print()">
+          <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+          </svg>
+          <span>Print Receipt</span>
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- Footer -->
+  <!-- Enterprise Application Footer -->
   <footer class="app-footer">
     <div class="footer-container">
-      <p><strong>Jen's Local Mart – Retail Store Management System</strong> &bull; Philippine Peso (₱) Currency</p>
-      <p class="footer-subtext">College JavaScript Activity &bull; Demonstrating Factory, Singleton, and Strategy Design Patterns</p>
+      <div>
+        <strong>Jen's Local Mart</strong> &bull; Retail Store Management System (POS & Backoffice)
+      </div>
+      <div class="footer-subtext">
+        College JavaScript Design Patterns Activity &bull; Operating Currency: Philippine Peso (₱)
+      </div>
     </div>
   </footer>
 

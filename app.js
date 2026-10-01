@@ -1058,6 +1058,31 @@ document.addEventListener('DOMContentLoaded', () => {
   populateSalesProductDropdown();
   renderCart();
 
+  // --- Global Tactile Click Ripple Animation ---
+  document.addEventListener('pointerdown', (e) => {
+    const btn = e.target.closest('.btn, .nav-btn, .qty-btn, .modal-close-btn');
+    if (!btn || btn.disabled) return;
+
+    const rect = btn.getBoundingClientRect();
+    const circle = document.createElement('span');
+    const diameter = Math.max(rect.width, rect.height);
+    const radius = diameter / 2;
+
+    circle.style.width = circle.style.height = `${diameter}px`;
+    circle.style.left = `${e.clientX - rect.left - radius}px`;
+    circle.style.top = `${e.clientY - rect.top - radius}px`;
+    circle.classList.add('ripple-wave');
+
+    const existingRipple = btn.querySelector('.ripple-wave');
+    if (existingRipple) existingRipple.remove();
+
+    btn.appendChild(circle);
+
+    setTimeout(() => {
+      circle.remove();
+    }, 600);
+  });
+
   // --- Step B: Navigation Tabs ---
   const navButtons = document.querySelectorAll('.nav-btn');
   navButtons.forEach(btn => {
@@ -1199,6 +1224,14 @@ document.addEventListener('DOMContentLoaded', () => {
         populateSalesProductDropdown(productId);
         renderDashboard();
         renderInventoryTable();
+
+        // Trigger dynamic cart badge pop animation
+        const cartBadge = document.getElementById('nav-cart-badge');
+        if (cartBadge) {
+          cartBadge.classList.remove('badge-pop');
+          void cartBadge.offsetWidth; // Force CSS reflow
+          cartBadge.classList.add('badge-pop');
+        }
       } else {
         showToast(result.message, 'error');
         updateProductPreview();
@@ -1255,6 +1288,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const result = checkout.completeSale();
 
       if (result.success) {
+        // Trigger success button pulse animation
+        btnCompleteSale.classList.add('btn-pulse-success');
+        setTimeout(() => btnCompleteSale.classList.remove('btn-pulse-success'), 700);
+
         showToast(result.message, 'success');
         renderCart();
         populateSalesProductDropdown();
